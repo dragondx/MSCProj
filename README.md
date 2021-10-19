@@ -2,6 +2,8 @@
 Apologies on the bad formatting
 <br />
 GPT-3 code omitted
+<br />
+Note that dataset paths might not be fixed. Please configure that before running codes.
 
 # Dataset
 Raw Manually labelled topic dataset - FinTopicBank included
