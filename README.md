@@ -33,7 +33,7 @@ Note that we mixed the manually labelled data and gpt-labelled data for training
 
 
 ## Direct classification with BERT
-Set the path to appropriate location (for accessing the dataset).
+>Set the path to appropriate location (for accessing the dataset).
 
 ### Training
 Run the script named training to train for either the direct classification method or the sentence bert (contrastive) method.  You can run test code to evaluate the models. (inference code included for contrastive method, it should be quite simple to extend inference code for direct classification method; details are on https://huggingface.co/transformers/main_classes/trainer.html)
@@ -54,6 +54,7 @@ Augmented dataset (eval on manual data) | 81.9%
 
 ## SBERT
 
+### Training
 n = original dataset size
 
 new dataset size = n*(n-1)/2 
@@ -62,6 +63,7 @@ We are dealing with sentence pairs.  Similarity score defined by the exponential
 
 >Models are trained on 2 epochs.
 
+### Results
 Dataset type | Accuracies
 ------------ | -------------
 Raw dataset (eval mixed) | 80% (1.5M pairs) vs 77.5% (400k pairs)
@@ -71,8 +73,6 @@ Notes:
 1. Add augmented data to get higher accuracies.
 2. Add more sentences pairs in training data for higher accuracies. (we are currently using about 50% of all pairs)
 3. Don't train with sigmoid perturbed distribution. (worst performance)
-
-<br />
 
 # Sentiment analysis
 
