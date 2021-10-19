@@ -1,20 +1,30 @@
 # NLP Project
-Apologies on the bad formatting
-<br />
-GPT-3 code omitted
-<br />
-Note that dataset paths might not be fixed. Please configure that before running codes.
+
+2 main parts of the projects are:
+1. Topic modeling
+2. Sentiment analysis
+3. (i know i said 2) combining the results
+
+>This readme shall serve as a guide to using the code in this repo.
+
+
+Some pointers
+1. Apologies on the bad formatting
+2. GPT-3 code omitted
+3. Note that dataset paths might not be fixed. Please configure that before running codes.
+
 
 # Dataset
-Raw Manually labelled topic dataset - FinTopicBank included
-<br />
-Processed GPT-3 augmented dataset - x2
 
-<br />
+Dataset used in this repo is included in their respective folders.  Codes might not reflect the correct relative paths. (Configure that before usage)
 
-Incomplete Financial Phrasebank - complete version on huggingface
+1. Raw Manually labelled topic dataset - FinTopicBank
+2. Processed GPT-3 augmented dataset - x2 (gpt.pickle, gpt2.pickle )
+3. Incomplete Financial Phrasebank (sentiment analysis) - complete version on huggingface
 
 # Topic Modeling
+In this repo, the guides are emphasized on the bert-based approaches. LDA codes are included nonetheless.
+<br />
 Note that we mixed the manually labelled data and gpt-labelled data for training.  This might not be desirable if you want to isolate/train only on gpt-labelled data and test on manually labelled data.  Reconfigurations is needed in the script in this case.
 
 ## GPT-3 Baseline
@@ -25,21 +35,22 @@ Note that we mixed the manually labelled data and gpt-labelled data for training
 ## Direct classification with BERT
 Set the path to appropriate location (for accessing the dataset).
 
-<br />
+### Training
+Run the script named training to train for either the direct classification method or the sentence bert (contrastive) method.  You can run test code to evaluate the models. (inference code included for contrastive method, it should be quite simple to extend inference code for direct classification method; details are on https://huggingface.co/transformers/main_classes/trainer.html)
 
-Raw dataset (eval mixed): 55.7% (give or take, don't use this)
+For more details on the contrastive learning method (on better training objectives or alternatives), look on https://www.sbert.net/
 
-Raw dataset (eval on manual data): 57.4%
+### Results
 
-Raw dataset (eval on gpt only): 57.9%
+Dataset type | Accuracies
+------------ | -------------
+Raw dataset (eval mixed) | 55.7% (give or take, don't use this)
+Raw dataset (eval on manual data) | 57.4%
+Raw dataset (eval on gpt only) | 57.9%
+Augmented dataset (eval on mixed) | 81.2%
+Augmented dataset (eval on manual data) | 81.9%
 
-<br />
-
-Augmented dataset (eval on mixed): 81.2%
-
-Augmented dataset (eval on manual data): 81.9%
-
-<br />
+> manual data means the original human labelled dataset
 
 ## SBERT
 
@@ -47,28 +58,25 @@ n = original dataset size
 
 new dataset size = n*(n-1)/2 
 
-<br />
-
 We are dealing with sentence pairs.  Similarity score defined by the exponential of the negative Jensen-Shannon divergence. More pairs used the better.
 
-<br />
-Trained on 2 epochs.
+>Models are trained on 2 epochs.
 
-Raw dataset (eval mixed): 80% (1.5M pairs) vs 77.5% (400k pairs)
+Dataset type | Accuracies
+------------ | -------------
+Raw dataset (eval mixed) | 80% (1.5M pairs) vs 77.5% (400k pairs)
+Raw dataset (eval on manual data) | 78.5% (1.5M pairs)
 
-Raw dataset (eval on manual data): 78.5% (1.5M pairs)
-
-<br />
-
-Add augmented data to get better results.
-
-Note: don't train with sigmoid perturbed distribution. (worse)
+Notes:
+1. Add augmented data to get higher accuracies.
+2. Add more sentences pairs in training data for higher accuracies. (we are currently using about 50% of all pairs)
+3. Don't train with sigmoid perturbed distribution. (worst performance)
 
 <br />
 
 # Sentiment analysis
 
-This section is mostly just using existing works
+This section is mostly just using existing works.
 
 ## VADER
 
